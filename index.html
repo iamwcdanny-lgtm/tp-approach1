@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP Launchpad — RWA issuance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap">
+<style>
+:root{color-scheme:light;--surface:#FFFFFF;--surface-2:#F8F8F8;--ink:#111D2C;--ink-2:#4B5563;--ink-2b:#374151;--ink-3:#6B7280;--ink-4:#9AA6B5;--line:#E6E9EE;--line-2:#D5DAE1;--rail:#C9D1DC;--fill:rgba(17,29,44,0.04);--line-soft:rgba(17,29,44,.06);--card:rgba(255,255,255,.6);--card-line:rgba(255,255,255,.75);--nav:rgba(255,255,255,.72);--k90:rgba(0,0,0,.9);--k80:rgba(0,0,0,.8);--k60:rgba(0,0,0,.6);--k30:rgba(0,0,0,.3);--k20:rgba(0,0,0,.2);--k12:rgba(0,0,0,.12);--k08:rgba(0,0,0,.08);--k06:rgba(0,0,0,.06);--shadow-rgb:159,162,191;--green-ink:#0B6E4F;--tag-g-bg:#E6FBF4;--tag-g-ink:#075E43;--tag-b-bg:#E5F5FF;--tag-b-ink:#00507F}
+html[data-theme="dark"]{color-scheme:dark;--surface:#0B1118;--surface-2:#0F1721;--ink:#EEF2F6;--ink-2:#A9B4C2;--ink-2b:#C3CCD6;--ink-3:#8693A3;--ink-4:#6E7B8B;--line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);--rail:rgba(255,255,255,.22);--fill:rgba(255,255,255,.05);--line-soft:rgba(255,255,255,.06);--card:rgba(20,29,40,.62);--card-line:rgba(255,255,255,.08);--nav:rgba(11,17,24,.72);--k90:rgba(255,255,255,.9);--k80:rgba(255,255,255,.88);--k60:rgba(255,255,255,.6);--k30:rgba(255,255,255,.38);--k20:rgba(255,255,255,.24);--k12:rgba(255,255,255,.14);--k08:rgba(255,255,255,.08);--k06:rgba(255,255,255,.06);--shadow-rgb:0,0,0;--green-ink:#3BE0A8;--tag-g-bg:rgba(0,214,144,.14);--tag-g-ink:#5BE7B5;--tag-b-bg:rgba(0,163,255,.16);--tag-b-ink:#7CCBFF}
+html[data-theme="dark"] .fsel select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23EEF2F6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+html[data-theme="dark"] .plogo:not([src$="hsbc.png"]):not([src$="oases.png"]){filter:invert(1) hue-rotate(180deg)}
+html[data-theme="dark"] footer{border-top:1px solid rgba(255,255,255,.06)}
+.hamb{display:none !important}
+.hamb .i-x{display:none}.hamb[aria-expanded="true"] .i-x{display:block}.hamb[aria-expanded="true"] .i-menu{display:none}
+.mmenu{position:fixed;inset:0;z-index:-1;padding-top:68px;overflow-y:auto;background:var(--nav);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+.mm-in{display:flex;flex-direction:column;padding-top:8px;padding-bottom:24px}
+.mm-row{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;border-bottom:1px solid var(--line)}
+.mm-lb{font:600 12px/1 Manrope,Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.seg{display:inline-flex;padding:3px;border-radius:999px;background:var(--fill);border:1px solid var(--line)}
+.seg button{border:0;background:transparent;font:600 14px/1 Manrope,Inter,sans-serif;color:var(--ink-2);height:38px;padding:0 16px;min-width:64px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(var(--shadow-rgb),.4)}
+.mm-cta{width:100%;margin-top:24px}
+.topnav:has(.hamb[aria-expanded="true"]){background:transparent !important;-webkit-backdrop-filter:none !important;backdrop-filter:none !important;border-bottom-color:transparent !important}
+html:has(.hamb[aria-expanded="true"]){overflow:hidden}
+@media (max-width:600px){.thm,.lng,.topnav .wrap>div>.btn-p{display:none !important}.hamb{display:flex !important}}
+@media (min-width:601px){.mmenu{display:none !important}}
+.thm .i-sun{display:none}html[data-theme="dark"] .thm .i-sun{display:block}html[data-theme="dark"] .thm .i-moon{display:none}
+</style>
+<script>(function(){var t=null;try{t=localStorage.getItem('tpl-theme')}catch(e){}if(!t)t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+body{margin:0;background:var(--surface)}
+*{box-sizing:border-box}
+a{color:var(--ink)}a:hover{color:var(--green-ink)}
+.wrap{width:100%;max-width:1228px;margin:0 auto;padding:0 24px}
+.split{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:end}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.labelrow{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px}
+.btn-p{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 32px;border-radius:24px;background:linear-gradient(90deg,#36CDCA,#00DD95);color:#FFFFFF;font:700 16px/24px Manrope,Inter,sans-serif;white-space:nowrap;text-decoration:none;border:0;cursor:pointer;transition:opacity .15s ease,transform .1s ease}
+.btn-p:hover{color:#FFFFFF;opacity:.92}
+.btn-p:active,.btn-s:active{transform:scale(.98)}
+.btn-p:disabled{background:var(--k08);color:var(--k20);cursor:default}
+.btn-s{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 32px;border-radius:24px;background:var(--surface);color:var(--k80);font:700 16px/24px Manrope,Inter,sans-serif;white-space:nowrap;text-decoration:none;border:0;box-shadow:inset 0 0 0 1.5px var(--k90);cursor:pointer;transition:opacity .15s ease,transform .1s ease}
+.btn-s:hover{color:var(--k80);opacity:.92}
+.btn-sm{height:36px;padding:0 16px;font-size:14px;line-height:20px}
+.navlink{font:600 12px/1 Manrope,Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;padding:12px 4px}
+.navlink:hover{color:var(--ink)}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font:600 12px/1.2 Manrope,Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.field input,.field textarea{width:100%;min-height:52px;padding:14px 16px;border:1px solid var(--line-2);border-radius:12px;background:var(--surface);font:500 15px/1.5 Manrope,Inter,sans-serif;color:var(--ink);outline:none;transition:border-color .2s ease,box-shadow .2s ease}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:#00A3FF;box-shadow:0 0 0 3px rgba(0,163,255,.18)}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-3)}
+.card{background:var(--card);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);border:1px solid var(--card-line);border-radius:20px;box-shadow:0 4px 24px rgba(var(--shadow-rgb),.18);transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(var(--shadow-rgb),.28)}
+.flink{color:var(--rail);text-decoration:none}.flink:hover{color:#FFFFFF}
+@media (max-width:900px){
+.split,.labelrow,.g2{grid-template-columns:minmax(0,1fr);gap:24px}
+.g3,.g4{grid-template-columns:minmax(0,1fr)}
+.navlinks{display:none !important}
+.steps{grid-template-columns:minmax(0,1fr) !important}
+}
+@media (min-width:901px) and (max-width:1100px){
+.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+.tab{min-height:44px;padding:10px 20px;border-radius:28px;border:0;cursor:pointer;font:600 14px/1 Manrope,Inter,sans-serif;transition:all .25s ease;background:transparent;color:var(--ink-2)}
+.tab.on{background:var(--surface);color:var(--ink);box-shadow:0 2px 10px rgba(var(--shadow-rgb),.35)}
+.tab:focus-visible,.btn-p:focus-visible,.btn-s:focus-visible{outline:2px solid #00A3FF;outline-offset:3px}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:#111D2C;color:#fff;padding:14px 22px;border-radius:32px;font:600 14px/1.4 Manrope,Inter,sans-serif;transition:all .3s ease;z-index:50;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}html{scroll-behavior:auto}}
+.topnav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,0);border-bottom:1px solid transparent;transition:background-color .25s ease,border-color .25s ease,backdrop-filter .25s ease,-webkit-backdrop-filter .25s ease}
+.topnav.is-scrolled{background:var(--nav);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border-bottom-color:var(--k06)}
+.marquee{overflow:hidden;padding:24px 0}
+.marquee-mask{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;width:max-content;animation:marquee 36s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-set{display:flex;align-items:center;gap:96px;margin:0;padding:0 48px;list-style:none}
+.plogo{display:block;width:240px;height:80px;object-fit:contain}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:900px){.marquee-set{gap:56px;padding:0 28px}.plogo{width:180px;height:60px}}
+@media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+.bgfx{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.has-bgfx{position:relative}
+.has-bgfx>*:not(.bgfx):not(.orbitfx){position:relative;z-index:1}
+.orbitfx{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+[data-orbit]{position:relative;overflow:clip}
+.ff{position:relative}
+.ff-box{box-sizing:border-box;display:flex;align-items:center;gap:8px;height:48px;padding:0 12px;background:var(--surface);border:1px solid var(--k12);border-radius:8px;cursor:text;transition:border-color .2s ease,box-shadow .2s ease}
+.ff-input{-webkit-appearance:none;appearance:none;flex:1;min-width:0;width:100%;height:22px;margin:0;padding:0;border:0;border-radius:0;outline:none;background:transparent;font:700 14px/22px Manrope,-apple-system,BlinkMacSystemFont,sans-serif;color:var(--k80);caret-color:#00D690}
+.ff-input::placeholder{font-weight:500;color:var(--k30);opacity:1}
+.ff-input:-webkit-autofill{-webkit-text-fill-color:var(--k80);transition:background-color 600000s 0s}
+.ff-label{position:absolute;left:8px;top:24px;transform:translateY(-50%);padding:0 4px;background:linear-gradient(to bottom,transparent 50%,var(--surface) 50%);font:500 14px/1 Manrope,-apple-system,BlinkMacSystemFont,sans-serif;white-space:nowrap;color:var(--k30);pointer-events:none;transition:color .2s ease,top .2s ease,font-size .2s ease}
+.ff.is-up .ff-label{top:0;font-size:12px;color:var(--k60)}
+.ff:has(.ff-input:-webkit-autofill) .ff-label{top:0;font-size:12px}
+.ff:has(.ff-input:autofill) .ff-label{top:0;font-size:12px}
+.ff.is-focused .ff-box{border-color:var(--k80);box-shadow:inset 0 0 0 .5px var(--k80)}
+.ff.is-focused .ff-label{color:var(--k80)}
+.ff-prefix{display:none;font:700 14px/22px Manrope,sans-serif;color:var(--k80);padding-right:8px;border-right:1px solid var(--k12)}
+.ff-phone.is-up .ff-prefix{display:block}
+.ff-area .ff-box{height:auto;min-height:112px;align-items:stretch;padding:13px 12px;resize:vertical;overflow:hidden}
+.ff-area .ff-input{height:auto;min-height:84px;resize:none;font-weight:700}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.capviz{position:relative;height:190px;border-bottom:1px solid var(--line-soft);background:transparent}
+.capviz-cv{position:absolute;inset:0;width:100%;height:100%;display:block}
+.capviz-num{position:absolute;top:20px;left:24px;font:600 12px/1 Manrope,Inter,sans-serif;letter-spacing:.1em;color:var(--ink-4)}
+.path-card:hover{transform:none}
+@media (max-width:900px){.path-card{padding:28px !important}}
+.steps{position:relative}
+.steps::before{content:"";position:absolute;left:0;right:0;top:-4px;height:6px;pointer-events:none;background-image:radial-gradient(circle,#00D690 0,#00D690 1.1px,rgba(0,214,144,0) 1.7px);background-size:6px 6px;background-repeat:repeat-x;background-position:0 50%;-webkit-mask-image:linear-gradient(90deg,transparent,#000 45%,#000 60%,transparent);mask-image:linear-gradient(90deg,transparent,#000 45%,#000 60%,transparent);-webkit-mask-size:40% 100%;mask-size:40% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;opacity:0}
+.steps>div{position:relative;z-index:1}
+@media (hover:hover) and (min-width:901px){
+#models .g2>.card,#defi .path-card{transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+#models .g2:has(>.card:hover)>.card:not(:hover),#defi div:has(>.path-card:hover)>.path-card:not(:hover){filter:opacity(.5)}
+}
+@media (hover:hover) and (min-width:901px) and (prefers-reduced-motion:no-preference){.path-card:hover .steps::before{animation:pulseline 2.2s cubic-bezier(.45,0,.25,1) infinite}}
+@keyframes pulseline{0%{-webkit-mask-position:-40% 0;mask-position:-40% 0;opacity:0}8%{opacity:1}88%{opacity:1}100%{-webkit-mask-position:140% 0;mask-position:140% 0;opacity:0}}
+@media (prefers-reduced-motion:reduce){.steps::before{animation:none;opacity:0}}
+@media (max-width:900px){.steps::before{display:none}}
+@media (max-width:900px){.steps{border-top:0 !important;border-left:2px solid var(--line-2);padding-left:24px;gap:24px !important}.steps>div{padding-top:0 !important}.steps>div>span[aria-hidden]{top:4px !important;left:-31px !important}}
+#top ~ section,#top ~ footer{position:relative;z-index:2}
+#top ~ section:not([style*="background"]){background:var(--surface)}
+#top{z-index:1}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:32px;align-items:center;min-height:min(640px,calc(100vh - 160px))}
+.hero-viz{position:relative;height:min(560px,64vh)}
+.hero-viz canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr);min-height:0;gap:8px}.hero-viz{height:300px;order:2}}
+.cardlink{margin-top:auto;padding-top:8px;font:700 14px/1.4 Manrope,Inter,sans-serif;color:var(--green-ink);text-decoration:none;display:inline-flex;gap:6px}
+.cardlink:hover{color:var(--ink)}
+.fsel{display:flex;flex-direction:column;gap:6px}
+.fsel label{font:500 12px/1 Manrope,sans-serif;color:var(--k60)}
+.fsel select{-webkit-appearance:none;appearance:none;height:48px;padding:0 40px 0 12px;border:1px solid var(--k12);border-radius:8px;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23111D2C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;font:700 14px/22px Manrope,sans-serif;color:var(--k80);outline:none}
+.fsel select:focus{border-color:var(--k80);box-shadow:inset 0 0 0 .5px var(--k80)}
+.fsel select:invalid{color:var(--k30)}
+.rail{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:30;display:none;flex-direction:column;gap:14px;align-items:flex-end}
+.rail a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink-4);font:600 11px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.rail a::after{content:"";width:14px;height:1.5px;background:var(--rail);transition:width .25s ease,background-color .25s ease}
+.rail a span{opacity:0;transform:translateX(6px);transition:opacity .25s ease,transform .25s ease}
+.rail a.on{color:var(--green-ink)}.rail a.on::after{width:32px;background:#00D690}
+.rail:hover a span{opacity:1;transform:none}
+@media (min-width:1360px){.rail{display:flex}}
+@media (min-width:1640px){.rail a.on span{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div style="font-family: Manrope, Inter, sans-serif; color: var(--ink); background: var(--surface); width: 100%; overflow-x: clip">
+
+<!-- NAV -->
+<header id="topnav" class="topnav">
+<div class="wrap" style="height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink)">
+<svg aria-hidden="true" width="32" height="32" viewBox="0 0 42 42" fill="currentColor"><path d="M21 1.3125L30.8438 6.89062V18.0469L21 23.625L11.1562 18.0469V6.89062L21 1.3125ZM15.75 8.53125H26.25V11.8125H22.9688V19.0312H19.0312V11.8125H15.75V8.53125Z" fill-rule="evenodd" clip-rule="evenodd"></path><path d="M3.9375 22.3125L7.875 19.6875L21 27.5625L34.125 19.6875L38.0625 22.3125L21 32.8125L3.9375 22.3125ZM3.9375 26.9062L21 36.75L38.0625 26.9062V31.5L21 41.3438L3.9375 31.5V26.9062Z"></path></svg>
+<span style="font-weight: 800; font-size: 16px; letter-spacing: 0.06em">TP LAUNCHPAD</span>
+</a>
+<nav class="navlinks" aria-label="Primary" style="display: flex; gap: 28px; align-items: center">
+<a class="navlink" href="#capabilities">Capabilities</a>
+<a class="navlink" href="#models">Issuance models</a>
+<a class="navlink" href="#platform">Platform</a>
+<a class="navlink" href="#defi">RWA × DeFi</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 12px">
+<button type="button" class="thm" aria-label="Toggle light / dark mode" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink)"><svg class="i-moon" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg><svg class="i-sun" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
+<button type="button" class="lng" aria-label="Change language" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink)">
+<svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"></path></svg>
+</button>
+<a class="btn-p btn-sm" href="#contact">Book a demo
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg>
+</a>
+<button type="button" class="hamb" aria-label="Menu" aria-expanded="false" aria-controls="mmenu" style="width: 44px; height: 44px; border-radius: 22px; border: 1px solid var(--line); background: var(--surface); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink)"><svg class="i-menu" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="i-x" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+</div>
+</div>
+<div id="mmenu" class="mmenu" hidden>
+<div class="wrap mm-in">
+<div class="mm-row"><span class="mm-lb">Language</span><div class="seg" data-k="lang"><button type="button" data-v="en" aria-pressed="false">EN</button><button type="button" data-v="zh" aria-pressed="false">繁中</button></div></div>
+<div class="mm-row"><span class="mm-lb">Mode</span><div class="seg" data-k="theme"><button type="button" data-v="light" aria-pressed="false">Light</button><button type="button" data-v="dark" aria-pressed="false">Dark</button></div></div>
+<a class="btn-p mm-cta" href="#contact">Book a demo</a>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+<section id="top" style="position: relative; padding: 96px 0 72px">
+<canvas id="ascii-inf" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; will-change: transform"></canvas>
+<div class="wrap" style="position: relative; z-index: 1">
+<div data-par="0.12" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2)">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: #00D690; display: inline-block"></span>TokenPlanet Launchpad</p>
+</div>
+<h1 data-par="0.32" style="will-change: transform; margin: 120px 0 0; font-size: clamp(48px, 7.2vw, 108px); line-height: 0.94; font-weight: 700; letter-spacing: -0.05em">
+<span style="display: block">Issue RWAs.</span>
+<span style="display: block; color: var(--ink-3)">Connect to liquidity.</span>
+</h1>
+<div class="split" data-par="0.2" style="margin-top: 56px; align-items: start; will-change: transform">
+<div></div>
+<div style="display: flex; flex-direction: column; gap: 28px">
+<p style="margin: 0; font-size: 18px; line-height: 1.6; font-weight: 500; color: var(--ink-2b); max-width: 460px">RWA issuance and operations for asset owners and institutions, with access to institutional markets and DeFi financing channels.</p>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<a class="btn-p" href="#contact">Book a demo
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg>
+</a>
+<a class="btn-s" href="#capabilities">See capabilities</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section aria-label="Ecosystem relationships" class="marquee" style="border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface)">
+<p style="margin: 0 0 16px; text-align: center; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; color: var(--ink-4)">PLACEHOLDER · LOGOS PENDING CONFIRMATION</p>
+<div class="marquee-mask">
+<div class="marquee-track">
+<ul class="marquee-set">
+<li><img class="plogo" src="logos/chainalysis.png" alt="Chainalysis" width="240" height="80"></li>
+<li><img class="plogo" src="logos/za-bank.png" alt="ZA Bank" width="240" height="80"></li>
+<li><img class="plogo" src="logos/nota-bene.png" alt="Nota Bene" width="240" height="80"></li>
+<li><img class="plogo" src="logos/hsbc.png" alt="HSBC" width="240" height="80"></li>
+<li><img class="plogo" src="logos/certik.png" alt="CertiK" width="240" height="80"></li>
+<li><img class="plogo" src="logos/oases.png" alt="OASES — Office for Attracting Strategic Enterprises" width="240" height="80"></li>
+</ul>
+<ul class="marquee-set" aria-hidden="true">
+<li><img class="plogo" src="logos/chainalysis.png" alt="" width="240" height="80"></li>
+<li><img class="plogo" src="logos/za-bank.png" alt="" width="240" height="80"></li>
+<li><img class="plogo" src="logos/nota-bene.png" alt="" width="240" height="80"></li>
+<li><img class="plogo" src="logos/hsbc.png" alt="" width="240" height="80"></li>
+<li><img class="plogo" src="logos/certik.png" alt="" width="240" height="80"></li>
+<li><img class="plogo" src="logos/oases.png" alt="" width="240" height="80"></li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities" style="padding: 120px 0">
+<div class="wrap">
+<div class="labelrow">
+<p style="margin: 6px 0 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2)">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: #00D690; display: inline-block"></span>What we do</p>
+<h2 style="margin: 0; font-size: clamp(36px, 4.6vw, 64px); line-height: 1.04; font-weight: 700; letter-spacing: -0.035em">Issue. Manage. Connect. <span style="color: var(--ink-3)">Three capabilities, one RWA workflow.</span></h2>
+</div>
+<div class="g3" style="margin-top: 72px">
+<article class="card" style="padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<span style="font-size: 12px; font-weight: 600; color: var(--ink-4); letter-spacing: 0.1em">01</span>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em">Issue</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Design the token rights structure, trading rules and issuance architecture based on the underlying asset and target market.</p>
+<ul style="margin: 8px 0 0; padding: 20px 0 0; list-style: none; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink-2)">
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00D690; flex: none; transform: translateY(-2px)"></span>Token rights and product structure</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00D690; flex: none; transform: translateY(-2px)"></span>Eligibility, transfer and redemption rules</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00D690; flex: none; transform: translateY(-2px)"></span>On-chain contract setup</li>
+</ul>
+<a class="cardlink" href="#models">See the two issuance models <span aria-hidden="true">→</span></a>
+</article>
+<article class="card" style="padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<span style="font-size: 12px; font-weight: 600; color: var(--ink-4); letter-spacing: 0.1em">02</span>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em">Manage</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Manage investor permissions, token operations and activity records in one workflow.</p>
+<ul style="margin: 8px 0 0; padding: 20px 0 0; list-style: none; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink-2)">
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00A3FF; flex: none; transform: translateY(-2px)"></span>Investor eligibility and address permissions</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00A3FF; flex: none; transform: translateY(-2px)"></span>Minting, burning, subscription and redemption</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00A3FF; flex: none; transform: translateY(-2px)"></span>Asset information, token supply and activity records</li>
+</ul>
+<a class="cardlink" href="#platform">See the operating platform <span aria-hidden="true">→</span></a>
+</article>
+<article class="card" style="padding: 32px; display: flex; flex-direction: column; gap: 20px">
+<span style="font-size: 12px; font-weight: 600; color: var(--ink-4); letter-spacing: 0.1em">03</span>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em">Connect</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Connect eligible RWA products with distribution channels, trading venues and DeFi collateral and lending protocols.</p>
+<ul style="margin: 8px 0 0; padding: 20px 0 0; list-style: none; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; font-size: 14px; font-weight: 500; line-height: 1.45; color: var(--ink-2)">
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00D690; flex: none; transform: translateY(-2px)"></span>Institutional distribution and market partners</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00D690; flex: none; transform: translateY(-2px)"></span>Connectivity to OTC and order-book trading venues</li>
+<li style="display: flex; gap: 10px; align-items: baseline"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 3px; background: #00D690; flex: none; transform: translateY(-2px)"></span>DeFi collateral and lending protocols</li>
+</ul>
+<a class="cardlink" href="#defi">See the RWA × DeFi paths <span aria-hidden="true">→</span></a>
+</article>
+</div>
+</div>
+</section>
+
+<!-- 01 MODELS -->
+<section id="models" style="padding: 120px 0">
+<div class="wrap">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2)">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: #00D690; display: inline-block"></span>01 / Issue</p>
+<div class="split" style="margin-top: 28px">
+<h2 style="margin: 0; font-size: clamp(36px, 4.6vw, 64px); line-height: 1.04; font-weight: 700; letter-spacing: -0.035em">Two issuance models for different issuance needs.</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-2)">Choose an issuance model based on the asset, participation requirements and target market.</p>
+</div>
+<div class="g2" style="margin-top: 56px; align-items: stretch">
+<article class="card" style="padding: 36px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; padding: 6px 10px; border-radius: 10px; background: var(--tag-g-bg); color: var(--tag-g-ink)">VATP CONTRACT</span><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; padding: 6px 10px; border-radius: 10px; background: var(--tag-b-bg); color: var(--tag-b-ink)">CUSTODY</span></div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em">Permissioned RWA issuance</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2)">For RWA that requires investor eligibility, wallet permissions and product-specific transfer and redemption rules.</p>
+<ul style="margin: auto 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px"><li style="padding: 16px 20px; border-radius: 14px; background: var(--fill); font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00A3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>Investor eligibility</li><li style="padding: 16px 20px; border-radius: 14px; background: var(--fill); font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00A3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg>Transfer rules</li><li style="padding: 16px 20px; border-radius: 14px; background: var(--fill); font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00A3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/></svg>Subscription &amp; redemption</li></ul>
+</article>
+<article class="card" style="padding: 36px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap"><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.12em; padding: 6px 10px; border-radius: 10px; background: var(--tag-b-bg); color: var(--tag-b-ink)">DEFI CONTRACT</span></div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em">Permissionless RWA issuance</h3>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink-2)">Issue from an eligible underlying asset or from an existing RWA token. Permissionless RWA tokens can be freely transferred on-chain and connected to DeFi.</p>
+<ul style="margin: auto 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px"><li style="padding: 16px 20px; border-radius: 14px; background: var(--fill); font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00A3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M2 20 4 15h6l2 5Z"/><path d="M12 20 14 15h6l2 5Z"/><path d="M7 13 9 8h6l2 5Z"/></svg>Underlying asset</li><li style="padding: 16px 20px; border-radius: 14px; background: var(--fill); font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00A3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/></svg>Existing RWA token</li><li style="padding: 16px 20px; border-radius: 14px; background: var(--fill); font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 12px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00A3FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex: none"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Connect to DeFi</li></ul>
+</article>
+</div>
+</div>
+</section>
+
+<!-- 02 PLATFORM -->
+<section id="platform" style="padding: 120px 0; background: var(--surface-2)">
+<div class="wrap">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2)">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: #00D690; display: inline-block"></span>02 / Manage</p>
+<div class="split" style="margin-top: 28px">
+<h2 style="margin: 0; font-size: clamp(36px, 4.6vw, 64px); line-height: 1.04; font-weight: 700; letter-spacing: -0.035em">One platform, full RWA lifecycle.</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-2)">Manage issuance projects, investor permissions, token operations and activity records in one workspace.</p>
+</div>
+<div class="g4" style="margin-top: 72px">
+<article class="card" style="padding: 0; display: flex; flex-direction: column; overflow: hidden">
+<div class="capviz"><canvas class="capviz-cv" data-kind="timeline" aria-hidden="true"></canvas><span class="capviz-num">01</span></div>
+<div style="padding: 24px 28px 28px; display: flex; flex-direction: column; gap: 16px; flex: 1">
+<h3 style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em">Project and product management</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Centralize asset information, issuance terms, participants, project progress and key milestones.</p>
+</div>
+</article>
+<article class="card" style="padding: 0; display: flex; flex-direction: column; overflow: hidden">
+<div class="capviz"><canvas class="capviz-cv" data-kind="gate" aria-hidden="true"></canvas><span class="capviz-num">02</span></div>
+<div style="padding: 24px 28px 28px; display: flex; flex-direction: column; gap: 16px; flex: 1">
+<h3 style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em">Investor and access control</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Manage investor eligibility, wallet allowlists and transaction permissions.</p>
+</div>
+</article>
+<article class="card" style="padding: 0; display: flex; flex-direction: column; overflow: hidden">
+<div class="capviz"><canvas class="capviz-cv" data-kind="token" aria-hidden="true"></canvas><span class="capviz-num">03</span></div>
+<div style="padding: 24px 28px 28px; display: flex; flex-direction: column; gap: 16px; flex: 1">
+<h3 style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em">Token operations</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Process investor subscriptions, redemptions and the corresponding on-chain operations.</p>
+</div>
+</article>
+<article class="card" style="padding: 0; display: flex; flex-direction: column; overflow: hidden">
+<div class="capviz"><canvas class="capviz-cv" data-kind="ledger" aria-hidden="true"></canvas><span class="capviz-num">04</span></div>
+<div style="padding: 24px 28px 28px; display: flex; flex-direction: column; gap: 16px; flex: 1">
+<h3 style="margin: 0; font-size: 18px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em">Asset and operation records</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2)">Track updates to asset information and token supply, with a record of each action and operator.</p>
+</div>
+</article>
+</div>
+</div>
+</section>
+
+<!-- 03 DEFI -->
+<section id="defi" data-orbit="defi" style="padding: 120px 0">
+<div class="wrap">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2)">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: #00D690; display: inline-block"></span>03 / Connect</p>
+<div class="split" style="margin-top: 28px">
+<h2 style="margin: 0; font-size: clamp(36px, 4.6vw, 64px); line-height: 1.04; font-weight: 700; letter-spacing: -0.035em">Extend RWA liquidity through DeFi.</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-2)">Depending on the project’s starting point, issue directly from an underlying asset or extend an existing RWA token into DeFi financing.</p>
+</div>
+
+<div style="margin-top: 72px; display: flex; flex-direction: column; gap: 24px">
+<div class="card path-card" style="padding: 40px">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px">
+<p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-ink)">Path 01 · Direct issuance</p>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em">Issue directly from an underlying asset</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 640px">For projects without an existing token. Design the token and contract structure for DeFi collateral and lending.</p>
+</div>
+</div>
+<div class="steps" style="margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; border-top: 2px solid var(--line)">
+<div style="position: relative; padding-top: 28px; display: flex; flex-direction: column; gap: 10px">
+<span aria-hidden="true" style="position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 6px; background: #00A3FF"></span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-4)">START</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.005em">Underlying asset</span>
+</div>
+<div style="position: relative; padding-top: 28px; display: flex; flex-direction: column; gap: 10px">
+<span aria-hidden="true" style="position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 6px; background: #2EC7E6"></span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-4)">ISSUE</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.005em">Permissionless RWA token</span>
+</div>
+<div style="position: relative; padding-top: 28px; display: flex; flex-direction: column; gap: 10px">
+<span aria-hidden="true" style="position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 6px; background: #00D690"></span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-4)">CONNECT</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.005em">Collateral &amp; lending</span>
+</div>
+</div>
+</div>
+
+<div class="card path-card" style="padding: 40px">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 14px">
+<p style="margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-ink)">Path 02 · Token extension</p>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 600; letter-spacing: -0.015em">Extend liquidity for an existing token</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); max-width: 640px">For eligible existing RWA tokens. Following custody and reserve verification, issue a mirror token for use in DeFi collateral and lending.</p>
+</div>
+</div>
+<div class="steps" style="margin-top: 36px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; border-top: 2px solid var(--line)">
+<div style="position: relative; padding-top: 28px; display: flex; flex-direction: column; gap: 10px">
+<span aria-hidden="true" style="position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 6px; background: #00A3FF"></span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-4)">START</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.005em">Existing RWA token</span>
+</div>
+<div style="position: relative; padding-top: 28px; display: flex; flex-direction: column; gap: 10px">
+<span aria-hidden="true" style="position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 6px; background: #1FB9F0"></span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-4)">VERIFY</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.005em">Custody &amp; reserve verification</span>
+</div>
+<div style="position: relative; padding-top: 28px; display: flex; flex-direction: column; gap: 10px">
+<span aria-hidden="true" style="position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 6px; background: #22D3C0"></span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-4)">ISSUE</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.005em">Mirror token issuance</span>
+</div>
+<div style="position: relative; padding-top: 28px; display: flex; flex-direction: column; gap: 10px">
+<span aria-hidden="true" style="position: absolute; top: -7px; left: 0; width: 12px; height: 12px; border-radius: 6px; background: #00D690"></span>
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: var(--ink-4)">USE</span>
+<span style="font-size: 16px; font-weight: 600; letter-spacing: -0.005em">DeFi collateral &amp; lending</span>
+</div>
+</div>
+</div>
+</div>
+
+<p style="margin: 64px 0 0; padding: 20px 24px; border-radius: 16px; background: var(--fill); font-size: 14px; line-height: 1.6; color: var(--ink-2)">Availability, collateral requirements and lending terms depend on project eligibility, jurisdiction and partner approval.</p>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding: 120px 0; background: var(--surface-2)">
+<div class="wrap">
+<div class="g2" style="gap: 64px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<p style="margin: 0; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-2)">
+<span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 2px; background: #00D690; display: inline-block"></span>Start a conversation</p>
+<h2 style="margin: 0; font-size: clamp(36px, 4.6vw, 64px); line-height: 1.04; font-weight: 700; letter-spacing: -0.035em">Tell us about your RWA project.</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-2); max-width: 460px">Share your asset type, project stage and target market, and we will define an issuance and financing approach together.</p>
+</div>
+<form class="card" style="padding: 40px; display: flex; flex-direction: column; gap: 20px" id="demo-form">
+<div class="g2" style="gap: 20px">
+<div class="ff"><div class="ff-box"><input class="ff-input" id="org" type="text" autocomplete="organization"></div><label class="ff-label" for="org">Organization name</label></div>
+<div class="ff"><div class="ff-box"><input class="ff-input" id="nm" type="text" autocomplete="name"></div><label class="ff-label" for="nm">Your name</label></div>
+</div>
+<div class="ff"><div class="ff-box"><input class="ff-input" id="em" type="email" data-ph="name@company.com" autocomplete="email"></div><label class="ff-label" for="em">Business email</label></div>
+<div class="ff"><div class="ff-box"><input class="ff-input" id="ph" type="tel" data-ph="Include country code, e.g. +852" autocomplete="tel"></div><label class="ff-label" for="ph">Phone</label></div>
+<div class="fsel"><label for="at">Asset type</label><select id="at"><option value="" selected disabled>Select asset type</option><option>Physical asset</option><option>Cash-flow asset</option><option>Existing RWA token</option><option>Other</option></select></div>
+<div class="ff ff-area"><div class="ff-box"><textarea class="ff-input" id="ps" rows="3" data-ph="Current stage, jurisdiction and what you would like to explore"></textarea></div><label class="ff-label" for="ps">Project stage and target market</label></div>
+<button class="btn-p" type="submit" style="margin-top: 8px; width: 100%">Book a demo</button>
+<p style="margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink-2)">Rukhex Technology Limited will use the information you submit to process demo requests and business enquiries. Please refer to our Privacy Policy for details.</p>
+</form>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: #111D2C; color: #FFFFFF; padding: 80px 0 40px">
+<div class="wrap">
+<div class="g3" style="gap: 48px; align-items: start">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg aria-hidden="true" width="32" height="32" viewBox="0 0 42 42" fill="#FFFFFF"><path d="M21 1.3125L30.8438 6.89062V18.0469L21 23.625L11.1562 18.0469V6.89062L21 1.3125ZM15.75 8.53125H26.25V11.8125H22.9688V19.0312H19.0312V11.8125H15.75V8.53125Z" fill-rule="evenodd" clip-rule="evenodd"></path><path d="M3.9375 22.3125L7.875 19.6875L21 27.5625L34.125 19.6875L38.0625 22.3125L21 32.8125L3.9375 22.3125ZM3.9375 26.9062L21 36.75L38.0625 26.9062V31.5L21 41.3438L3.9375 31.5V26.9062Z"></path></svg>
+<span style="font-weight: 800; font-size: 16px; letter-spacing: 0.06em">TP LAUNCHPAD</span>
+</div>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C9D1DC; max-width: 340px">RWA issuance, lifecycle management and liquidity connectivity — for asset owners and institutions.</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; color: #9AA6B5">CONTACT</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #C9D1DC">For product enquiries, demo requests or partnership opportunities, please contact:</p>
+<a class="flink" href="mailto:partnership@tokenplanet.ai" style="font-size: 16px; font-weight: 700; color: #FFFFFF">partnership@tokenplanet.ai</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.16em; color: #9AA6B5">LEGAL</p>
+<a class="flink" href="#top" style="font-size: 15px">Privacy policy</a>
+<a class="flink" href="#top" style="font-size: 15px">Website terms &amp; risk disclosure</a>
+</div>
+</div>
+<div style="margin-top: 64px; padding-top: 28px; border-top: 1px solid #2A3A4F; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 13px; color: #9AA6B5">© 2026 Rukhex Technology Limited. All rights reserved.</p>
+<p style="margin: 0; font-size: 12px; line-height: 1.6; color: #9AA6B5; max-width: 860px">Information on this website is for general and institutional discussion purposes only and does not constitute investment, legal or financial advice. Services are subject to eligibility, applicable laws and jurisdiction.</p>
+</div>
+</div>
+</footer>
+
+</div>
+<nav class="rail" aria-label="Page sections">
+<a href="#top" data-rail="top"><span>Overview</span></a>
+<a href="#capabilities" data-rail="capabilities"><span>Capabilities</span></a>
+<a href="#models" data-rail="models"><span>01 Issue</span></a>
+<a href="#platform" data-rail="platform"><span>02 Manage</span></a>
+<a href="#defi" data-rail="defi"><span>03 Connect</span></a>
+<a href="#contact" data-rail="contact"><span>Book a demo</span></a>
+</nav>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+ var f=document.getElementById('demo-form'),toast=document.getElementById('toast');
+ f.addEventListener('submit',function(e){e.preventDefault();toast.textContent=(window.__tplToast?window.__tplToast():'Demo only — this form does not send anything.');toast.classList.add('show');setTimeout(function(){toast.classList.remove('show')},2800);});
+})();
+(function(){var n=document.getElementById('topnav');function u(){n.classList.toggle('is-scrolled',window.scrollY>8)}window.addEventListener('scroll',u,{passive:true});u();})();
+(function(){
+var cv=document.getElementById('ascii-inf'),hero=document.getElementById('top');if(!cv||!cv.getContext)return;
+var ctx=cv.getContext('2d'),RAMP=' .·:-=+*x#%@',CW=10,CH=10,W=0,H=0,cols=0,rows=0,cells=null,dpr=1,mx=-9999,my=-9999,running=true,t0=performance.now();
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var STOPS=[[0,[54,205,202]],[0.32,[0,214,144]],[0.58,[60,206,196]],[0.8,[112,160,240]],[1,[139,124,246]]];
+function lem(t,a){var s=Math.sin(t),c=Math.cos(t),d=1+s*s;return[a*c/d,a*s*c/d];}
+function setup(){
+ W=document.documentElement.clientWidth;H=window.innerHeight;dpr=Math.min(window.devicePixelRatio||1,2);
+ cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.font='500 12px ui-monospace, "SF Mono", Menlo, Consolas, monospace';ctx.textBaseline='middle';ctx.textAlign='center';
+ var mob=W<900,cx=mob?W*0.55:W*0.70,cy=mob?H*0.30:H*0.40,a=mob?W*0.62:Math.min(W*0.40,H*0.82);
+ var N=640,pts=[],F=a*2.6,yaw=-0.55,pit=0.12,rol=-0.24,cyw=Math.cos(yaw),syw=Math.sin(yaw),cp=Math.cos(pit),sp=Math.sin(pit),cr0=Math.cos(rol),sr0=Math.sin(rol);
+ for(var i=0;i<N;i++){var tt=i/N*Math.PI*2,q=lem(tt,a*1.08),X=q[0],Y=q[1],Z=a*0.18*Math.sin(tt+0.6);
+  var x1=X*cyw+Z*syw,z1=-X*syw+Z*cyw,y1=Y*cp-z1*sp,z2=Y*sp+z1*cp,x2=x1*cr0-y1*sr0,y2=x1*sr0+y1*cr0,k=F/(F+z2);
+  pts.push([cx+x2*k,cy+y2*k,tt,k]);}
+ var orb=[{rx:a*1.32,ry:a*0.50,rot:-0.26},{rx:a*1.12,ry:a*0.80,rot:0.34}];
+ cols=Math.ceil(W/CW);rows=Math.ceil(H/CH);cells=[];
+ for(var y=0;y<rows;y++)for(var x=0;x<cols;x++){
+  var px=x*CW+CW/2,py=y*CH+CH/2,dx0=px-cx,dy0=py-cy;
+  if(Math.abs(dx0)>a*1.75||Math.abs(dy0)>a*1.15)continue;
+  var best=1e9,bt=0,bk=1;for(var k=0;k<N;k+=2){var ex=px-pts[k][0],ey=py-pts[k][1],dd=ex*ex+ey*ey;if(dd<best){best=dd;bt=pts[k][2];bk=pts[k][3];}}
+  var o=[];for(var j=0;j<2;j++){var O=orb[j],cr=Math.cos(-O.rot),sr=Math.sin(-O.rot),lx=dx0*cr-dy0*sr,ly=dx0*sr+dy0*cr,nr=Math.sqrt((lx*lx)/(O.rx*O.rx)+(ly*ly)/(O.ry*O.ry));o.push([Math.abs(nr-1)*Math.min(O.rx,O.ry),Math.atan2(ly/O.ry,lx/O.rx)]);}
+  var u=Math.max(0,Math.min(1,(px-(cx-a*1.4))/(a*2.8)));
+  var dd0=Math.sqrt(best),ex2=Math.max(Math.abs(dx0)/(a*1.75),Math.abs(dy0)/(a*1.15));cells.push({x:px,y:py,d:dd0,t:bt,k:bk,o:o,u:u,h:Math.exp(-dd0/(a*0.35))*Math.max(0,1-ex2*ex2)});
+ }
+ cells.a=a;
+}
+function wrap(v){v=(v+Math.PI)%(Math.PI*2);if(v<0)v+=Math.PI*2;return v-Math.PI;}
+function mix(u){for(var i=1;i<STOPS.length;i++){if(u<=STOPS[i][0]){var p0=STOPS[i-1],p1=STOPS[i],k=(u-p0[0])/(p1[0]-p0[0]),A=p0[1],B=p1[1];return[(A[0]+(B[0]-A[0])*k)|0,(A[1]+(B[1]-A[1])*k)|0,(A[2]+(B[2]-A[2])*k)|0];}}return STOPS[STOPS.length-1][1];}
+function frame(now){
+ var T=(now-t0)/1000;ctx.clearRect(0,0,W,H);if(!cells)return;var a=cells.a,base=a*0.085;
+ for(var i=0;i<cells.length;i++){var c=cells[i];
+  var pk=Math.max(0.45,Math.min(1.6,c.k)),th=base*pk*pk*(0.72+0.28*Math.cos(2*c.t+T*0.9));
+  var tube=Math.max(0,1-c.d/th);tube=tube*tube*(3-2*tube);
+  var glow=0.16*Math.exp(-c.d/(a*0.055));
+  var p=0;for(var k=0;k<3;k++){var dt=wrap(c.t-(T*0.7+k*2.094));p+=Math.exp(-(dt*dt)/0.22);}
+  var fade=Math.max(0,Math.min(1,(pk-0.62)/0.55)),I=(tube*(0.38+0.62*Math.min(1,p))+glow*(0.5+0.5*Math.min(1,p)))*(0.15+0.85*fade);
+  for(var j=0;j<2;j++){var od=c.o[j][0],line=Math.max(0,1-od/5.5);if(line>0){var da=wrap(c.o[j][1]-(j?-T*0.45:T*0.55)),da2=wrap(c.o[j][1]-(j?-T*0.45+3.14:T*0.55+3.14));var com=Math.exp(-(da*da)/0.05)+0.6*Math.exp(-(da2*da2)/0.03);I=Math.max(I,line*(0.16+0.9*com));}}
+  if(mx>-999){var ex=c.x-mx,ey=c.y-my;I+= (0.15+I)*0.9*Math.exp(-(ex*ex+ey*ey)/9000);}
+  if(I>1)I=1;var col=mix(c.u),r,al;
+  if(I<0.05){al=0.1*c.h;if(al<0.015)continue;r=0.9;}else{r=0.9+3.1*Math.pow(I,0.8);al=0.14+0.46*I;}
+  ctx.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+al.toFixed(3)+')';ctx.beginPath();ctx.arc(c.x,c.y,r,0,6.2832);ctx.fill();
+ }
+}
+function loop(now){if(running)frame(now);if(!reduce)requestAnimationFrame(loop);}
+setup();if(reduce){frame(t0+4000);}else requestAnimationFrame(loop);
+var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){setup();if(reduce)frame(t0+4000);},150);});
+hero.addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY+py;});
+hero.addEventListener('pointerleave',function(){mx=-9999;my=-9999;});
+var py=0,pt=false;var layers=[].slice.call(hero.querySelectorAll('[data-par]')).map(function(el){return[el,parseFloat(el.getAttribute('data-par'))];});function par(){pt=false;var y=Math.max(0,window.scrollY);if(reduce){py=y;cv.style.transform='translate3d(0,'+(-y)+'px,0)';return;}py=y*0.45;cv.style.transform='translate3d(0,'+(-py).toFixed(1)+'px,0)';if(y<window.innerHeight*1.5){layers.forEach(function(l){l[0].style.transform='translate3d(0,'+(-y*l[1]).toFixed(1)+'px,0)';});}}window.addEventListener('scroll',function(){if(!pt){pt=true;requestAnimationFrame(par);}},{passive:true});par();
+if('IntersectionObserver' in window){new IntersectionObserver(function(en){running=en[0].isIntersecting;cv.style.visibility=running?'visible':'hidden';}).observe(hero);}
+})();
+(function(){[].forEach.call(document.querySelectorAll('.ff'),function(ff){var i=ff.querySelector('.ff-input'),box=ff.querySelector('.ff-box');function u(){var f=document.activeElement===i;ff.classList.toggle('is-focused',f);ff.classList.toggle('is-up',f||i.value!=='');i.placeholder=f?(i.getAttribute('data-ph')||''):'';}i.addEventListener('focus',u);i.addEventListener('blur',u);i.addEventListener('input',u);box.addEventListener('mousedown',function(e){if(e.target!==i){e.preventDefault();i.focus();}});u();});})();
+(function(){
+var cvs=[].slice.call(document.querySelectorAll('.capviz-cv'));if(!cvs.length)return;
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var STOPS=[[0,[54,205,202]],[0.32,[0,214,144]],[0.58,[60,206,196]],[0.8,[112,160,240]],[1,[139,124,246]]];
+function mix(u){for(var i=1;i<STOPS.length;i++){if(u<=STOPS[i][0]){var a=STOPS[i-1],b=STOPS[i],k=(u-a[0])/(b[0]-a[0]);return[(a[1][0]+(b[1][0]-a[1][0])*k)|0,(a[1][1]+(b[1][1]-a[1][1])*k)|0,(a[1][2]+(b[1][2]-a[1][2])*k)|0];}}return STOPS[STOPS.length-1][1];}
+function wrap(v){v=(v+Math.PI)%(Math.PI*2);if(v<0)v+=Math.PI*2;return v-Math.PI;}
+function band(d,w){var t=Math.max(0,1-Math.abs(d)/w);return t*t*(3-2*t);}
+function hash(n){var x=Math.sin(n*127.1)*43758.5453;return x-Math.floor(x);}
+var F={
+ timeline:function(x,y,T){var I=0,rows=[-0.42,0,0.42],ms=[-0.55,0.25,1.0];
+  for(var i=0;i<3;i++){var dy=y-rows[i];if(Math.abs(dy)>0.22)continue;if(x<-1.35||x>1.35)continue;
+   var prog=((T*0.12+i*0.31)%1)*2.9-1.4,bw=band(dy,0.14);I=Math.max(I,bw*(x<prog?0.5+0.3*Math.exp(-Math.pow((x-prog)/0.12,2)):0.1));
+   for(var m=0;m<3;m++){var d=Math.sqrt(Math.pow(x-ms[m],2)+dy*dy);if(d<0.22){var hit=prog>ms[m];I=Math.max(I,band(d,0.22)*(hit?1:0.3));}}}
+  return I;},
+ gate:function(x,y,T,gx,gy){var I=0,lanes=[-0.66,-0.33,0,0.33,0.66],ok=[1,0,1,1,0];
+  if(Math.abs(x)<0.07){for(var j=0;j<5;j++){if(Math.abs(y-lanes[j])<0.12)return ok[j]?0.85:0.38;}if(Math.abs(y)<0.9)return 0.22;}
+  for(var l=0;l<5;l++){var dy=y-lanes[l];if(Math.abs(dy)>0.18)continue;
+   for(var k=0;k<4;k++){var px=((T*0.26+hash(l*7+k)+k/4)%1)*3.4-1.7;if(!ok[l]&&px>-0.12)px=-0.12-((px+0.12)*0.0);var fade=(!ok[l]&&(((T*0.26+hash(l*7+k)+k/4)%1)*3.4-1.7)>-0.12)?Math.max(0,1-((((T*0.26+hash(l*7+k)+k/4)%1)*3.4-1.7)+0.12)*2.2):1;
+    var d=Math.sqrt(Math.pow(x-px,2)+dy*dy),b=band(d,0.16)*fade;if(b>0)I=Math.max(I,b*(ok[l]&&px>0?1:0.6));}}
+  return I;},
+ token:function(x,y,T){var I=0,R=0.5,sp=Math.abs(Math.cos(T*1.1)),rx=R*(0.12+0.88*sp),er=Math.sqrt((x*x)/(rx*rx)+(y*y)/(R*R));
+  I=Math.max(I,band(er-1,0.16/(0.4+0.6*sp+0.0001)*0.5+0.1));if(er<0.82){I=Math.max(I,0.16+0.18*Math.sin(y*9+T*2));}
+  if(Math.abs(y)<0.14){for(var k=0;k<3;k++){var ph=(T*0.4+k/3)%1,pin=-1.6+ph*(1.6-R-0.05),pout=R+0.05+ph*(1.6-R-0.05);
+   var b1=band(Math.sqrt(Math.pow(x-pin,2)+y*y),0.11),b2=band(Math.sqrt(Math.pow(x-pout,2)+y*y),0.11);I=Math.max(I,b1*(0.4+0.6*ph),b2*(1-0.75*ph));}
+   if(Math.abs(y)<0.04&&(x<-R||x>R)&&Math.abs(x)<1.6)I=Math.max(I,0.12);}
+  return I;},
+ ledger:function(x,y,T){var I=0,cs=[-1.05,-0.35,0.35,1.05],h=0.25,step=Math.floor(T*0.9)%6;
+  for(var i=0;i<4;i++){var dx=x-cs[i],ax=Math.abs(dx),ay=Math.abs(y);if(ax>h+0.08||ay>h+0.08)continue;
+   var edge=band(Math.max(ax,ay)-h,0.07),filled=i<step,newest=(i===step-1);
+   var v=edge*(filled?(newest?1:0.6):0.25);if(ax<h-0.06&&ay<h-0.06&&filled){var line=(Math.round((y+h)/0.13)%2===0)?0.32:0.12;v=Math.max(v,newest?line+0.25*Math.sin(T*6):line);}I=Math.max(I,v);}
+  if(Math.abs(y)<0.05){for(var j=0;j<3;j++){var lx=(cs[j]+cs[j+1])/2;if(Math.abs(x-lx)<0.08)I=Math.max(I,j<step-1?0.55:0.15);}}
+  return I;}
+};
+var G=7,items=cvs.map(function(cv){return{cv:cv,ctx:cv.getContext('2d'),kind:cv.getAttribute('data-kind'),w:0,h:0,vis:true};});
+var dpr=Math.min(window.devicePixelRatio||1,2),t0=performance.now();
+function size(it){var r=it.cv.getBoundingClientRect();if(r.width===it.w&&r.height===it.h)return;it.w=r.width;it.h=r.height;it.cv.width=Math.round(it.w*dpr);it.cv.height=Math.round(it.h*dpr);it.ctx.setTransform(dpr,0,0,dpr,0,0);}
+function draw(it,T){size(it);var c=it.ctx,w=it.w,h=it.h;c.clearRect(0,0,w,h);var cols=Math.floor(w/G),rows=Math.floor(h/G),ox=(w-cols*G)/2+G/2,oy=(h-rows*G)/2+G/2,sc=Math.min(w,h)*0.5,f=F[it.kind];
+ for(var gy=0;gy<rows;gy++)for(var gx=0;gx<cols;gx++){var px=ox+gx*G,py=oy+gy*G,x=(px-w/2)/sc,y=(py-h/2)/sc-0.13,I=f(x,y,T,gx,gy);if(I>1)I=1;
+  var col=mix(px/w),al,r;if(I<0.06){al=0.08;r=0.65;}else{al=0.16+0.72*I;r=0.75+2.1*I;}
+  c.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+al.toFixed(3)+')';c.beginPath();c.arc(px,py,r,0,6.2832);c.fill();}}
+function loop(now){var T=(now-t0)/1000;items.forEach(function(it){if(it.vis)draw(it,T);});if(!reduce)requestAnimationFrame(loop);}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){items.forEach(function(it){if(it.cv===e.target)it.vis=e.isIntersecting;});});});items.forEach(function(it){io.observe(it.cv);});}
+window.addEventListener('resize',function(){items.forEach(function(it){it.w=0;});if(reduce)loop(t0+3000);});
+if(reduce)loop(t0+3000);else requestAnimationFrame(loop);
+})();
+(function(){
+var secs=[].slice.call(document.querySelectorAll('[data-orbit]'));if(!secs.length)return;
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var STOPS=[[0,[54,205,202]],[0.32,[0,214,144]],[0.58,[60,206,196]],[0.8,[112,160,240]],[1,[139,124,246]]];
+function mix(u){for(var i=1;i<STOPS.length;i++){if(u<=STOPS[i][0]){var a=STOPS[i-1],b=STOPS[i],k=(u-a[0])/(b[0]-a[0]);return[(a[1][0]+(b[1][0]-a[1][0])*k)|0,(a[1][1]+(b[1][1]-a[1][1])*k)|0,(a[1][2]+(b[1][2]-a[1][2])*k)|0];}}return STOPS[STOPS.length-1][1];}
+function wrap(v){v=(v+Math.PI)%(Math.PI*2);if(v<0)v+=Math.PI*2;return v-Math.PI;}
+var SPEC={
+ why:[{cx:1.02,cy:-0.55,rx:0.88,ry:1.32,rot:0.12,th:16,dir:1,sp:0.16},{cx:1.08,cy:-0.62,rx:0.97,ry:1.44,rot:0.1,th:7,dir:-1,sp:0.11}],
+ defi:[{cx:-0.06,cy:1.18,rx:0.9,ry:0.96,rot:-0.1,th:15,dir:-1,sp:0.13},{cx:-0.1,cy:1.24,rx:0.99,ry:1.06,rot:-0.12,th:6,dir:1,sp:0.09}]
+};
+var G=10,dpr=Math.min(window.devicePixelRatio||1,2),t0=performance.now();
+var items=secs.map(function(sec){var cv=document.createElement('canvas');cv.className='orbitfx';cv.setAttribute('aria-hidden','true');sec.insertBefore(cv,sec.firstChild);return{sec:sec,cv:cv,ctx:cv.getContext('2d'),spec:SPEC[sec.getAttribute('data-orbit')]||[],w:0,h:0,cells:[],vis:true};});
+function build(it){var r=it.sec.getBoundingClientRect(),W=r.width,H=r.height;it.w=W;it.h=H;it.cv.width=Math.round(W*dpr);it.cv.height=Math.round(H*dpr);it.ctx.setTransform(dpr,0,0,dpr,0,0);it.cells=[];
+ var halo=60;for(var y=G/2;y<H;y+=G)for(var x=G/2;x<W;x+=G){var best=null;
+  for(var k=0;k<it.spec.length;k++){var o=it.spec[k],cx=o.cx*W,cy=o.cy*H,rx=o.rx*W,ry=o.ry*H,c=Math.cos(-o.rot),s=Math.sin(-o.rot),dx=x-cx,dy=y-cy,lx=dx*c-dy*s,ly=dx*s+dy*c,nr=Math.sqrt((lx*lx)/(rx*rx)+(ly*ly)/(ry*ry)),d=Math.abs(nr-1)*Math.min(rx,ry);
+   if(d<o.th+halo){var e={k:k,d:d,a:Math.atan2(ly/ry,lx/rx)};if(!best)best=[];best.push(e);}}
+  if(best)it.cells.push({x:x,y:y,u:x/W,o:best});}}
+function draw(it,T){if(!it.w)build(it);var c=it.ctx;c.clearRect(0,0,it.w,it.h);
+ for(var i=0;i<it.cells.length;i++){var cl=it.cells[i],I=0;
+  for(var j=0;j<cl.o.length;j++){var e=cl.o[j],o=it.spec[e.k],t=Math.max(0,1-e.d/o.th);t=t*t*(3-2*t);
+   var ph=T*o.sp*o.dir,c1=Math.exp(-Math.pow(wrap(e.a-ph*6.2832),2)/0.012),c2=Math.exp(-Math.pow(wrap(e.a-ph*6.2832-2.1),2)/0.02);
+   var v=t*(0.32+0.68*Math.max(c1,0.6*c2))*(o.th<10?0.75:1)+0.09*Math.exp(-e.d/26);if(v>I)I=v;}
+  if(I<0.04)continue;if(I>1)I=1;var col=mix(cl.u),al=I<0.12?0.1:0.12+0.5*I,r=I<0.12?0.7:0.7+2.4*I;
+  c.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+al.toFixed(3)+')';c.beginPath();c.arc(cl.x,cl.y,r,0,6.2832);c.fill();}}
+function loop(now){var T=(now-t0)/1000;items.forEach(function(it){if(it.vis)draw(it,T);});if(!reduce)requestAnimationFrame(loop);}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){items.forEach(function(it){if(it.sec===e.target)it.vis=e.isIntersecting;});});});items.forEach(function(it){io.observe(it.sec);});}
+var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){items.forEach(function(it){it.w=0;});if(reduce)loop(t0+5000);},150);});
+if(reduce)loop(t0+5000);else requestAnimationFrame(loop);
+})();
+(function(){
+var links=[].slice.call(document.querySelectorAll('.rail a'));if(!links.length||!('IntersectionObserver' in window))return;
+var map={};links.forEach(function(a){map[a.getAttribute('data-rail')]=a;});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.remove('on')});var a=map[e.target.id];if(a)a.classList.add('on');}});},{rootMargin:'-45% 0px -50% 0px'});
+Object.keys(map).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});
+})();
+(function(){
+if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var sel=['section[id]:not(#top) .wrap > p:first-child','#capabilities .labelrow','section[id]:not(#top) .wrap > .split','.g3 > .card','.g2 > .card','.g4 > .card','.path-card','#defi .wrap > p:last-child','#contact .g2 > div','#contact form','footer .g3 > div'];
+var els=[];sel.forEach(function(s){[].forEach.call(document.querySelectorAll(s),function(el){if(els.indexOf(el)<0)els.push(el);});});
+var items=els.map(function(el){var i=0,p=el.parentElement;if(p&&/(^| )g[234]( |$)/.test(p.className)){i=[].indexOf.call(p.children,el);}el.style.willChange='opacity, transform';return{el:el,i:i};});
+var NAV=76,ticking=false;
+function ease(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);}
+function upd(){ticking=false;var vh=window.innerHeight;
+ items.forEach(function(it){var r=it.el.getBoundingClientRect();
+  var top=r.top+it.i*48;                          // later columns arrive a beat later
+  var inn=ease((vh-top)/(vh*0.28));               // fade/rise in over bottom 28% of screen
+  var out=ease((r.bottom-NAV)/(vh*0.22));         // fade/lift away as it leaves under the nav
+  var o=Math.min(inn,out),y=(1-inn)*48-(1-out)*36,sc=0.985+0.015*Math.min(inn,1);
+  it.el.style.opacity=o.toFixed(3);it.el.style.transform='translate3d(0,'+y.toFixed(1)+'px,0) scale('+sc.toFixed(4)+')';});}
+function req(){if(!ticking){ticking=true;requestAnimationFrame(upd);}}
+window.addEventListener('scroll',req,{passive:true});window.addEventListener('resize',req);upd();
+})();
+</script>
+<script>
+(function(){
+var ZH={"Capabilities": "產品能力", "Issuance models": "發行模式", "Platform": "平台管理", "Book a demo": "預約演示", "Issue RWAs.": "發行 RWA，", "Connect to liquidity.": "連接流動性。", "RWA issuance and operations for asset owners and institutions, with access to institutional markets and DeFi financing channels.": "為資產持有人與機構提供 RWA 發行與持續營運服務，連接機構市場及 DeFi 融資渠道。", "See capabilities": "查看能力", "PLACEHOLDER · LOGOS PENDING CONFIRMATION": "佔位 · 標誌待確認", "What we do": "產品能力", "Issue. Manage. Connect.": "發行 · 管理 · 連接", "Three capabilities, one RWA workflow.": "三項能力，貫穿 RWA 全流程。", "Issue": "發行", "Manage": "管理", "Connect": "連接", "Design the token rights structure, trading rules and issuance architecture based on the underlying asset and target market.": "基於底層資產特性與目標市場，設計代幣權益結構、交易規則與發行架構。", "Token rights and product structure": "代幣權益與產品結構", "Eligibility, transfer and redemption rules": "准入、轉讓與申贖規則", "On-chain contract setup": "鏈上合約配置", "See the two issuance models": "查看兩種發行模式", "Manage investor permissions, token operations and activity records in one workflow.": "統一管理投資者權限、代幣操作與營運記錄。", "Investor eligibility and address permissions": "投資者資格與地址權限", "Minting, burning, subscription and redemption": "鑄造、銷毀、申購與贖回", "Asset information, token supply and activity records": "資產資訊、代幣供應量與操作記錄", "See the operating platform": "查看營運平台", "Connect eligible RWA products with distribution channels, trading venues and DeFi collateral and lending protocols.": "為符合條件的 RWA 產品對接分銷渠道、交易平台，以及 DeFi 抵押與借貸協議。", "Institutional distribution and market partners": "機構分銷與市場合作方", "Connectivity to OTC and order-book trading venues": "對接場外交易及訂單簿交易平台", "DeFi collateral and lending protocols": "DeFi 抵押與借貸協議", "See the RWA × DeFi paths": "查看 RWA × DeFi 路徑", "01 / Issue": "01 / 發行", "Two issuance models for different issuance needs.": "兩種發行模式，對應不同發行需求。", "Choose an issuance model based on the asset, participation requirements and target market.": "結合底層資產、參與要求與目標市場，選擇適合的發行模式。", "VATP CONTRACT": "VATP 合約", "CUSTODY": "託管", "DEFI CONTRACT": "DeFi 合約", "Permissioned RWA issuance": "許可型 RWA 發行", "For RWA that requires investor eligibility, wallet permissions and product-specific transfer and redemption rules.": "適用於需要投資者准入、錢包權限，以及特定轉讓和申贖規則的 RWA 產品。", "Investor eligibility": "投資者准入", "Transfer rules": "轉讓規則", "Subscription & redemption": "申購與贖回", "Permissionless RWA issuance": "流通型 RWA 發行", "Issue from an eligible underlying asset or from an existing RWA token. Permissionless RWA tokens can be freely transferred on-chain and connected to DeFi.": "發行可基於符合條件的底層資產，也可基於現有 RWA 代幣。所發行的流通型 RWA 代幣可在鏈上自由轉讓，並連接 DeFi。", "Underlying asset": "底層資產", "Existing RWA token": "現有 RWA 代幣", "Connect to DeFi": "連接 DeFi", "02 / Manage": "02 / 管理", "One platform, full RWA lifecycle.": "一個平台，管理 RWA 全生命週期。", "Manage issuance projects, investor permissions, token operations and activity records in one workspace.": "工作台集中管理發行項目、投資者權限、代幣操作與營運記錄。", "Project and product management": "項目與產品管理", "Centralize asset information, issuance terms, participants, project progress and key milestones.": "集中管理資產資訊、發行條款、參與方、項目進度及關鍵節點。", "Investor and access control": "投資者與權限管理", "Manage investor eligibility, wallet allowlists and transaction permissions.": "管理投資者資格、錢包白名單及交易權限。", "Token operations": "代幣操作", "Process investor subscriptions, redemptions and the corresponding on-chain operations.": "處理投資者申購、贖回及相應的鏈上操作。", "Asset and operation records": "資產與營運記錄", "Track updates to asset information and token supply, with a record of each action and operator.": "記錄資產資訊與代幣供應量變動，保留操作及經辦記錄。", "03 / Connect": "03 / 連接", "Extend RWA liquidity through DeFi.": "連接 DeFi，拓展 RWA 流動性。", "Depending on the project’s starting point, issue directly from an underlying asset or extend an existing RWA token into DeFi financing.": "根據項目現狀，可從底層資產直接發行，也可基於現有 RWA 代幣拓展 DeFi 融資路徑。", "Path 01 · Direct issuance": "路徑 01 · 直接發行", "Issue directly from an underlying asset": "從底層資產直接發行", "For projects without an existing token. Design the token and contract structure for DeFi collateral and lending.": "適用於尚未發行代幣的項目，設計適用於 DeFi 抵押與借貸的代幣及合約結構。", "START": "起點", "ISSUE": "發行", "Permissionless RWA token": "流通型 RWA 代幣", "CONNECT": "連接", "Collateral & lending": "抵押與借貸", "Path 02 · Token extension": "路徑 02 · 現有代幣接入", "Extend liquidity for an existing token": "為現有代幣拓展流動性", "For eligible existing RWA tokens. Following custody and reserve verification, issue a mirror token for use in DeFi collateral and lending.": "適用於符合條件的現有 RWA 代幣。完成託管與儲備核驗後，發行鏡像代幣，用於 DeFi 抵押與借貸。", "VERIFY": "核驗", "Custody & reserve verification": "託管與儲備核驗", "Mirror token issuance": "鏡像代幣發行", "USE": "使用", "DeFi collateral & lending": "DeFi 抵押與借貸", "Availability, collateral requirements and lending terms depend on project eligibility, jurisdiction and partner approval.": "具體接入方式與適用條件取決於項目資質、司法轄區及合作方審批。", "Start a conversation": "產品演示", "Tell us about your RWA project.": "預約產品演示", "Share your asset type, project stage and target market, and we will define an issuance and financing approach together.": "填寫項目基本資訊，我們將與您聯絡並安排產品演示。", "Organization name": "機構名稱", "Your name": "聯絡人姓名", "Business email": "商務電郵", "Phone": "聯絡電話", "Asset type": "資產類型", "Select asset type": "選擇資產類型", "Physical asset": "實物資產", "Cash-flow asset": "現金流資產", "Other": "其他", "Project stage and target market": "項目階段與目標市場", "Rukhex Technology Limited will use the information you submit to process demo requests and business enquiries. Please refer to our Privacy Policy for details.": "Rukhex Technology Limited 將使用您提交的資料處理演示預約及業務合作諮詢。有關詳情請參閱《私隱政策》。", "RWA issuance, lifecycle management and liquidity connectivity — for asset owners and institutions.": "為資產持有人與機構提供 RWA 發行、全生命週期管理與流動性連接。", "CONTACT": "聯絡我們", "For product enquiries, demo requests or partnership opportunities, please contact:": "產品諮詢、預約演示或合作洽談，請聯絡：", "LEGAL": "法律資訊", "Privacy policy": "私隱政策", "Website terms & risk disclosure": "網站條款及風險披露", "© 2026 Rukhex Technology Limited. All rights reserved.": "© 2026 Rukhex Technology Limited. 版權所有。", "Information on this website is for general and institutional discussion purposes only and does not constitute investment, legal or financial advice. Services are subject to eligibility, applicable laws and jurisdiction.": "本網站資訊僅供一般及機構討論用途，不構成投資、法律或財務建議。服務須符合資格要求、適用法律及司法轄區規定。", "Overview": "概覽", "Language": "語言", "Mode": "顯示模式", "Light": "淺色", "Dark": "深色", "01 Issue": "01 發行", "02 Manage": "02 管理", "03 Connect": "03 連接"}, AT={"Change language": "切換語言", "Menu": "選單", "Toggle light / dark mode": "切換淺色／深色模式", "Page sections": "頁面段落", "Primary": "主導覽", "Ecosystem relationships": "生態合作"};
+var TITLE_EN=document.title, TITLE_ZH='TP Launchpad — RWA 發行';
+var nodes=[],attrs=[];
+var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode&&n.parentNode.nodeName;if(p==='SCRIPT'||p==='STYLE')return NodeFilter.FILTER_REJECT;return ZH[n.nodeValue.trim()]!==undefined?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;}});
+var n;while((n=w.nextNode())){var k=n.nodeValue.trim();nodes.push({n:n,en:n.nodeValue,zh:n.nodeValue.replace(k,ZH[k])});}
+document.querySelectorAll('[aria-label]').forEach(function(el){var v=el.getAttribute('aria-label');if(AT[v])attrs.push({el:el,en:v,zh:AT[v]});});
+function set(lang){var zh=lang==='zh';
+ nodes.forEach(function(x){x.n.nodeValue=zh?x.zh:x.en;});
+ attrs.forEach(function(x){x.el.setAttribute('aria-label',zh?x.zh:x.en);});
+ document.documentElement.lang=zh?'zh-Hant':'en';document.title=zh?TITLE_ZH:TITLE_EN;
+ try{localStorage.setItem('tpl-lang',lang);}catch(e){}}
+window.__tplToast=function(){return document.documentElement.lang==='zh-Hant'?'已記錄（原型示意，未實際提交）。':'Demo only — this form does not send anything.';};
+var btn=document.querySelector('button[aria-label="Change language"]');
+if(btn)btn.addEventListener('click',function(){set(document.documentElement.lang==='zh-Hant'?'en':'zh');});
+var saved=null;try{saved=localStorage.getItem('tpl-lang');}catch(e){}
+if(saved==='zh')set('zh');
+})();
+</script>
+<script>(function(){var b=document.querySelector('.thm');if(!b)return;b.addEventListener('click',function(){var r=document.documentElement,t=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',t);try{localStorage.setItem('tpl-theme',t)}catch(e){}});})();</script>
+<script>(function(){var hb=document.querySelector('.hamb'),mm=document.getElementById('mmenu');if(!hb||!mm)return;var r=document.documentElement;
+function op(o){hb.setAttribute('aria-expanded',o?'true':'false');mm.hidden=!o;}
+hb.addEventListener('click',function(e){e.stopPropagation();op(mm.hidden);});
+mm.addEventListener('click',function(e){e.stopPropagation();if(e.target.closest('a'))op(false);});
+document.addEventListener('click',function(e){if(!mm.hidden&&!(e.target.closest&&e.target.closest('#topnav')))op(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!mm.hidden){op(false);hb.focus();}});
+window.addEventListener('resize',function(){if(window.innerWidth>600&&!mm.hidden)op(false);});
+function cur(k){return k==='lang'?(r.lang==='zh-Hant'?'zh':'en'):(r.getAttribute('data-theme')==='dark'?'dark':'light');}
+function sync(){mm.querySelectorAll('.seg').forEach(function(s){var c=cur(s.dataset.k);s.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===c?'true':'false');});});}
+mm.querySelectorAll('.seg button').forEach(function(b){b.addEventListener('click',function(){var k=b.parentNode.dataset.k;if(cur(k)===b.dataset.v)return;var t=document.querySelector(k==='lang'?'.lng':'.thm');if(t)t.click();sync();});});
+new MutationObserver(sync).observe(r,{attributes:true,attributeFilter:['lang','data-theme']});sync();
+})();</script>
+</body>
+</html>
