@@ -28,7 +28,7 @@ html:has(.hamb[aria-expanded="true"]){overflow:hidden}
 @media (min-width:601px){.mmenu{display:none !important}}
 .thm .i-sun{display:none}html[data-theme="dark"] .thm .i-sun{display:block}html[data-theme="dark"] .thm .i-moon{display:none}
 </style>
-<script>(function(){var t=null;try{t=localStorage.getItem('tpl-theme')}catch(e){}if(!t)t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<script>(function(){var t=null;try{t=localStorage.getItem('tpl-theme')}catch(e){}if(t!=='dark')t='light';document.documentElement.setAttribute('data-theme',t);})();</script>
 <style>
 body{margin:0;background:var(--surface)}
 *{box-sizing:border-box}
