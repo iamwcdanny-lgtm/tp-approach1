@@ -28,7 +28,7 @@ html:has(.hamb[aria-expanded="true"]){overflow:hidden}
 @media (min-width:601px){.mmenu{display:none !important}}
 .thm .i-sun{display:none}html[data-theme="dark"] .thm .i-sun{display:block}html[data-theme="dark"] .thm .i-moon{display:none}
 </style>
-<script>(function(){var t=null;try{t=localStorage.getItem('tpl-theme')}catch(e){}if(t!=='dark')t='light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<script>document.documentElement.setAttribute('data-theme','light');</script>
 <style>
 body{margin:0;background:var(--surface)}
 *{box-sizing:border-box}
@@ -669,7 +669,7 @@ var saved=null;try{saved=localStorage.getItem('tpl-lang');}catch(e){}
 if(saved==='zh')set('zh');
 })();
 </script>
-<script>(function(){var b=document.querySelector('.thm');if(!b)return;b.addEventListener('click',function(){var r=document.documentElement,t=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',t);try{localStorage.setItem('tpl-theme',t)}catch(e){}});})();</script>
+<script>(function(){var b=document.querySelector('.thm');if(!b)return;b.addEventListener('click',function(){var r=document.documentElement,t=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',t);});})();</script>
 <script>(function(){var hb=document.querySelector('.hamb'),mm=document.getElementById('mmenu');if(!hb||!mm)return;var r=document.documentElement;
 function op(o){hb.setAttribute('aria-expanded',o?'true':'false');mm.hidden=!o;}
 hb.addEventListener('click',function(e){e.stopPropagation();op(mm.hidden);});
