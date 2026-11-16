@@ -509,7 +509,7 @@ function setup(){
  W=document.documentElement.clientWidth;H=window.innerHeight;dpr=Math.min(window.devicePixelRatio||1,2);
  cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
  ctx.font='500 12px ui-monospace, "SF Mono", Menlo, Consolas, monospace';ctx.textBaseline='middle';ctx.textAlign='center';
- var mob=W<900,cx=W*0.5,cy=mob?H*0.30:H*0.40,a=mob?W*0.62:Math.min(W*0.40,H*0.82);
+ var mob=W<900,cx=W*0.55,cy=mob?H*0.30:H*0.40,a=mob?W*0.62:Math.min(W*0.40,H*0.82);
  var N=640,pts=[],F=a*2.6,yaw=-0.55,pit=0.12,rol=-0.24,cyw=Math.cos(yaw),syw=Math.sin(yaw),cp=Math.cos(pit),sp=Math.sin(pit),cr0=Math.cos(rol),sr0=Math.sin(rol);
  for(var i=0;i<N;i++){var tt=i/N*Math.PI*2,q=lem(tt,a*1.08),X=q[0],Y=q[1],Z=a*0.18*Math.sin(tt+0.6);
   var x1=X*cyw+Z*syw,z1=-X*syw+Z*cyw,y1=Y*cp-z1*sp,z2=Y*sp+z1*cp,x2=x1*cr0-y1*sr0,y2=x1*sr0+y1*cr0,k=F/(F+z2);
