@@ -39,6 +39,7 @@ a{color:var(--ink)}a:hover{color:var(--green-ink)}
 .g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .mseg{display:none}
+@media (max-width:600px){#top{padding-bottom:96px !important}#top .split{margin-top:72px !important}}
 @media (max-width:900px){#models .mseg{display:flex;width:100%;margin-top:40px;padding:3px;border-radius:999px;background:var(--fill);border:1px solid var(--line)}#models .mseg button{flex:1;border:0;background:transparent;font:600 14px/1 Manrope,Inter,sans-serif;color:var(--ink-2);height:40px;border-radius:999px;cursor:pointer}#models .mseg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(var(--shadow-rgb),.4)}#models .g2{margin-top:16px !important}#models .g2>.card:not(.on){display:none !important}}
 .labelrow{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px}
 .btn-p{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 32px;border-radius:24px;background:linear-gradient(90deg,#36CDCA,#00DD95);color:#FFFFFF;font:700 16px/24px Manrope,Inter,sans-serif;white-space:nowrap;text-decoration:none;border:0;cursor:pointer;transition:opacity .15s ease,transform .1s ease}
@@ -186,7 +187,7 @@ html{scroll-behavior:smooth;scroll-padding-top:80px}
 </header>
 
 <!-- HERO -->
-<section id="top" style="position: relative; padding: 96px 0 72px">
+<section id="top" style="position: relative; padding: 96px 0 clamp(96px, 18vh, 200px)">
 <canvas id="ascii-inf" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; will-change: transform"></canvas>
 <div class="wrap" style="position: relative; z-index: 1">
 <div data-par="0.12" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap">
@@ -197,7 +198,7 @@ html{scroll-behavior:smooth;scroll-padding-top:80px}
 <span style="display: block">Issue RWAs.</span>
 <span style="display: block; color: var(--ink-3)">Connect to liquidity.</span>
 </h1>
-<div class="split" data-par="0.2" style="margin-top: 56px; align-items: start; will-change: transform">
+<div class="split" data-par="0.2" style="margin-top: clamp(72px, 16vh, 180px); align-items: start; will-change: transform">
 <div></div>
 <div style="display: flex; flex-direction: column; gap: 28px">
 <p style="margin: 0; font-size: 18px; line-height: 1.6; font-weight: 500; color: var(--ink-2b); max-width: 460px">RWA issuance and operations for asset owners and institutions, with access to institutional markets and DeFi financing channels.</p>
